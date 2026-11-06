@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MealDesk — Food Ordering Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard"><span class="brand-mark">M</span><span>meal<span class="brand-light">desk</span><small>ORDER MANAGEMENT</small></span></a>
+      <p class="nav-label">WORKSPACE</p>
+      <nav id="main-nav">
+        <button class="nav-item active" data-section="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-section="customers"><span>♙</span> Customers</button>
+        <button class="nav-item" data-section="restaurants"><span>⌂</span> Restaurants</button>
+        <button class="nav-item" data-section="menu"><span>☷</span> Menu items</button>
+        <button class="nav-item" data-section="create-order"><span>＋</span> Create order</button>
+        <button class="nav-item" data-section="orders"><span>▤</span> Order history</button>
+      </nav>
+    </aside>
+
+    <main class="main-area">
+      <br>
+      <section class="page-section active" id="section-dashboard">
+        <div class="page-heading"><div><p class="eyebrow">OVERVIEW</p><h1>Good day <span class="wave">✦</span></h1><p class="muted">Here’s what’s happening across your food ordering system.</p></div><button class="button button-primary" data-go="create-order"><span>＋</span> Create an order</button></div>
+        <div class="stat-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total customers</span><span class="stat-icon coral">♙</span></div><strong id="stat-customers">—</strong><small>Registered in your database</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Restaurants</span><span class="stat-icon peach">⌂</span></div><strong id="stat-restaurants">—</strong><small>Available on the platform</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Menu items</span><span class="stat-icon green">☷</span></div><strong id="stat-menuItems">—</strong><small>Across all restaurants</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Total orders</span><span class="stat-icon purple">▤</span></div><strong id="stat-orders">—</strong><small>Orders placed so far</small></article>
+          <article class="stat-card revenue-card"><div class="stat-top"><span>Total revenue</span><span class="stat-icon gold">₹</span></div><strong id="stat-revenue">—</strong><small>Excludes cancelled orders</small></article>
+        </div>
+        <article class="panel"><div class="panel-heading"><div><h2>Recent orders</h2><p class="muted">The latest activity from your database</p></div><button class="text-button" data-go="orders">View all orders <span>→</span></button></div><div class="table-wrap"><table><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>RESTAURANT</th><th>DATE</th><th>AMOUNT</th><th>STATUS</th></tr></thead><tbody id="recent-orders"></tbody></table></div></article>
+      </section>
+
+      <section class="page-section" id="section-customers">
+        <div class="page-heading"><div><p class="eyebrow">PEOPLE</p><h1>Customers</h1><p class="muted">Manage customer records stored in MySQL.</p></div><button class="button button-primary" id="add-customer-button">＋ Add customer</button></div>
+        <article class="panel"><div class="panel-heading"><div><h2>All customers</h2><p class="muted">Search by customer name or email</p></div><label class="search-box"><span>⌕</span><input id="customer-search" placeholder="Search customers…"></label></div><div class="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>EMAIL</th><th>PHONE</th><th>ADDRESS</th><th></th></tr></thead><tbody id="customers-table"></tbody></table></div></article>
+      </section>
+
+      <section class="page-section" id="section-restaurants">
+        <div class="page-heading"><div><p class="eyebrow">PARTNERS</p><h1>Restaurants</h1><p class="muted">Manage restaurant details and locations.</p></div><button class="button button-primary" id="add-restaurant-button">＋ Add restaurant</button></div>
+        <article class="panel"><div class="panel-heading"><div><h2>All restaurants</h2><p class="muted">Restaurant records in your database</p></div></div><div class="table-wrap"><table><thead><tr><th>RESTAURANT</th><th>LOCATION</th><th>PHONE</th><th>EMAIL</th><th></th></tr></thead><tbody id="restaurants-table"></tbody></table></div></article>
+      </section>
+
+      <section class="page-section" id="section-menu">
+        <div class="page-heading"><div><p class="eyebrow">CATALOGUE</p><h1>Menu items</h1><p class="muted">Keep restaurant menus and availability up to date.</p></div><button class="button button-primary" id="add-menu-button">＋ Add menu item</button></div>
+        <article class="panel"><div class="panel-heading"><div><h2>All menu items</h2><p class="muted">Items are linked to their restaurants with a foreign key.</p></div><select id="menu-restaurant-filter" class="select-compact"><option value="">All restaurants</option></select></div><div class="table-wrap"><table><thead><tr><th>ITEM</th><th>RESTAURANT</th><th>CATEGORY</th><th>PRICE</th><th>AVAILABILITY</th><th></th></tr></thead><tbody id="menu-table"></tbody></table></div></article>
+      </section>
+
+      <section class="page-section" id="section-create-order">
+        <div class="page-heading"><div><p class="eyebrow">NEW TRANSACTION</p><h1>Create an order</h1><p class="muted">Choose a customer and restaurant, then add items to the order.</p></div></div>
+        <div class="order-layout"><div class="panel order-form-panel"><div class="step-heading"><span class="step-number">1</span><div><h2>Order details</h2><p class="muted">Select the customer and restaurant</p></div></div><div class="form-grid"><label class="field full-field">Customer<select id="order-customer" required><option value="">Choose a customer</option></select></label><label class="field full-field">Restaurant<select id="order-restaurant" required><option value="">Choose a restaurant</option></select></label></div><div class="step-heading menu-step"><span class="step-number">2</span><div><h2>Add items</h2><p class="muted">Set a quantity for each menu item</p></div></div><div id="order-menu-list" class="order-menu-list empty-state">Choose a restaurant to load its menu.</div></div>
+          <aside class="panel order-summary"><div class="summary-title"><span class="stat-icon peach">▤</span><div><h2>Order summary</h2><p class="muted">Prices are read from MySQL</p></div></div><div id="order-summary-lines" class="summary-lines"><p class="empty-summary">Your selected items will appear here.</p></div><div class="summary-total"><span>Total</span><strong id="order-total">₹0.00</strong></div><button id="place-order-button" class="button button-primary button-wide">Place order <span>→</span></button><p class="secure-note">Order and items are saved together in a database transaction.</p></aside></div>
+      </section>
+
+      <section class="page-section" id="section-orders">
+        <div class="page-heading"><div><p class="eyebrow">TRANSACTIONS</p><h1>Order history</h1><p class="muted">Review orders, inspect joined details and update their status.</p></div></div>
+        <article class="panel"><div class="panel-heading"><div><h2>All orders</h2><p class="muted">Customer, restaurant and item data joined from your database</p></div><select id="order-status-filter" class="select-compact"><option value="">All statuses</option><option>Pending</option><option>Confirmed</option><option>Preparing</option><option>Delivered</option><option>Cancelled</option></select></div><div class="table-wrap"><table><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>RESTAURANT</th><th>ORDERED ITEMS</th><th>DATE</th><th>AMOUNT</th><th>STATUS</th><th></th></tr></thead><tbody id="orders-table"></tbody></table></div></article>
+        <article id="order-detail" class="panel detail-panel hidden"></article>
+      </section>
+      <footer class="app-footer">MealDesk <span>·</span> Simple ordering, thoughtfully managed.</footer>
+    </main>
+  </div>
+  <dialog id="record-dialog"><form id="record-form" method="dialog"><div class="dialog-heading"><div><p class="eyebrow" id="dialog-eyebrow">NEW RECORD</p><h2 id="dialog-title">Add customer</h2></div><button class="icon-button" type="button" id="dialog-close" aria-label="Close">×</button></div><div id="dialog-fields" class="form-grid"></div><div class="dialog-actions"><button class="button button-quiet" type="button" id="dialog-cancel">Cancel</button><button class="button button-primary" type="submit">Save record</button></div></form></dialog>
+  <script src="/script.js"></script>
+</body>
+</html>
